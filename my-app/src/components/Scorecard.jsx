@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Scorecard.css";
 import parse from "html-react-parser";
 import staticHtml from "../assets/statichtml";
+import MatchSummary from "./MatchSummary";
 
 const Scorecard = ({ htmlData }) => {
   // Use either the provided HTML data or the static HTML
@@ -9,7 +10,7 @@ const Scorecard = ({ htmlData }) => {
 
   // State to track which team's content to display
   const [activeTeam, setActiveTeam] = useState("team1");
-
+  const [battingTeam, setBattingTeam] = useState(false);
   const parser = new DOMParser();
   const htmlDoc = parser.parseFromString(htmlToParse, "text/html");
   const team1Content = htmlDoc.getElementById("ballByBallTeam1");
@@ -22,40 +23,11 @@ const Scorecard = ({ htmlData }) => {
     setActiveTeam(team);
   };
 
-  const getMatchSummaryHtml = (matchSummaryElement) => {
-    if (matchSummaryElement) {
-      // Get the parent container
-      const container = matchSummaryElement.parentElement;
-
-      // Extract the result text (the h3 after match-summary)
-      const resultElement = container.querySelector("h3:not(.ms-league-name)");
-      const resultText = resultElement ? resultElement.textContent : "";
-
-      // Create a clean version of the HTML with just the match summary and result
-      const cleanHtml = `
-          <div class="match-summary-container">
-            ${matchSummaryElement.outerHTML}
-            ${resultText ? `<h3 class="match-result">${resultText}</h3>` : ""}
-          </div>
-        `;
-
-      return cleanHtml;
-    }
-  };
 
   return (
     <div className="scorecard">
       <div className="scorecard-container">
-        {getMatchSummaryHtml(matchSummaryElement) ? (
-          <div
-            className="match-summary-wrapper"
-            dangerouslySetInnerHTML={{
-              __html: getMatchSummaryHtml(matchSummaryElement),
-            }}
-          />
-        ) : (
-          <div className="loading">Loading match data...</div>
-        )}
+        <MatchSummary matchSummaryElement={matchSummaryElement} setBattingTeam={setBattingTeam} team1Content={team1Content} team2Content={team2Content} battingTeam={battingTeam} />
 
         {/* Team Toggle Buttons */}
         <div className="team-toggle">
