@@ -1,35 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Live Counter</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 100px;
-    }
-    #counter {
-      font-size: 48px;
-      color: #333;
-    }
-  </style>
-</head>
-<body>
-  <h1>Live Counter</h1>
-  <div id="counter">0</div>
-
-  <script>
-    let count = 0;
-    const counterEl = document.getElementById('counter');
-
-    setInterval(() => {
-      count++;
-      counterEl.textContent = count;
-    }, 1000);
-  </script>
-
+const staticHtml = `
 <div class="tab-pane" id="ballByBallTeam1">
   <div class="match-innings-top-all">
       <div class="row">
@@ -683,5 +652,6 @@
       </div>
   </div>
 </div>
-</body>
-</html>
+`;
+
+export default staticHtml;

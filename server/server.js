@@ -32,11 +32,18 @@ async function monitorWebpage(url, socket) {
     // Set viewport
     await page.setViewport({ width: 1280, height: 800 });
     
-    // Navigate to the URL
-    await page.goto(url, { waitUntil: 'networkidle0' });
+    // Set longer timeout and wait until network is idle
+    await page.setDefaultNavigationTimeout(60000); // Increase timeout to 60 seconds
+    
+    // Navigate to the URL with extended timeout
+    await page.goto(url, { 
+      waitUntil: ['networkidle0', 'domcontentloaded'],
+      timeout: 60000 
+    });
 
     // Expose function to handle mutations
     await page.exposeFunction('handleMutation', (data) => {
+      console.log('Mutation detected');
       socket.emit('pageUpdate', {
         type: 'mutation',
         data: data,
@@ -46,7 +53,6 @@ async function monitorWebpage(url, socket) {
 
     // Set up mutation observer for the entire document
     await page.evaluate(() => {
-      // Observe the entire document starting from the root
       const observerTarget = document.documentElement;
       
       const mutationObserver = new MutationObserver((mutationsList) => {
@@ -57,12 +63,11 @@ async function monitorWebpage(url, socket) {
         }
       });
 
-      // Start observing with all options enabled
       mutationObserver.observe(observerTarget, {
-        childList: true,      // Watch for changes to the direct children
-        subtree: true,        // Watch the entire subtree
-        characterData: true,  // Watch for text changes
-        attributes: true      // Watch for attribute changes
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributes: true
       });
 
       console.log('MutationObserver set up on document root');
@@ -93,7 +98,15 @@ async function monitorWebpage(url, socket) {
     
   } catch (error) {
     console.error('Error monitoring webpage:', error);
-    socket.emit('error', { message: 'Failed to monitor webpage' });
+    socket.emit('error', { 
+      message: 'Failed to monitor webpage',
+      details: error.message 
+    });
+    
+    // Clean up browser if it exists
+    if (browser) {
+      await browser.close();
+    }
   }
 }
 
