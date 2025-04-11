@@ -655,3 +655,8 @@ const staticHtml = `
 `;
 
 export default staticHtml;
+
+
+export const staticHtml2 = `
+
+`;

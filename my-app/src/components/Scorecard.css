@@ -459,4 +459,104 @@
   border: 1px solid #e9ecef;
   max-height: 400px;
   overflow-y: auto;
+}
+
+/* Match Summary Styles */
+.match-summary-wrapper {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.match-summary-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.match-summary {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.match-summary h3 {
+  margin: 10px 0;
+  color: #333;
+}
+
+.match-summary .ms-league-name {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.schedule-logo {
+  margin: 20px 0;
+}
+
+.schedule-logo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.schedule-logo li {
+  margin: 0 15px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.schedule-logo img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.schedule-logo .teamName {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.schedule-logo .vs {
+  font-weight: bold;
+  color: #666;
+  margin: 0 10px;
+}
+
+.schedule-logo .win {
+  color: #28a745;
+}
+
+.schedule-logo .lose {
+  color: #dc3545;
+}
+
+.match-result {
+  font-weight: bold;
+  color: #28a745;
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .schedule-logo img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .schedule-logo li {
+    margin: 0 8px;
+  }
+  
+  .match-summary h3 {
+    font-size: 16px;
+  }
+  
+  .match-summary .ms-league-name {
+    font-size: 14px;
+  }
 } 
